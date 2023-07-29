@@ -1,0 +1,282 @@
+//Microsoft Developer Studio generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// Chinese (中国) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
+#pragma code_page(936)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE DISCARDABLE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)\r\n"
+    "#ifdef _WIN32\r\n"
+    "LANGUAGE 4, 2\r\n"
+    "#pragma code_page(936)\r\n"
+    "#endif //_WIN32\r\n"
+    "#include ""res\\DP.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""l.chs\\afxres.rc""          // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON    DISCARDABLE     "res\\DP.ico"
+IDI_ICON1               ICON    DISCARDABLE     "res\\132.ico"
+IDI_ICON2               ICON    DISCARDABLE     "res\\130.ico"
+IDI_ICON3               ICON    DISCARDABLE     "res\\131.ico"
+IDI_ICON5               ICON    DISCARDABLE     "res\\icon5.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG DISCARDABLE  0, 0, 215, 87
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About DPS"
+FONT 9, "宋体"
+BEGIN
+END
+
+IDD_DP_DIALOG DIALOGEX 0, 0, 334, 243
+STYLE DS_MODALFRAME | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | 
+    WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "HDPS_2C_V2.0_2"
+FONT 9, "宋体"
+BEGIN
+    LTEXT           "COM",IDC_STATIC_COM,16,18,13,9
+    COMBOBOX        IDC_COMBO_COM,36,16,64,15,CBS_DROPDOWNLIST | CBS_SORT | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Function",IDC_STATIC_FUNCTION,23,197,35,10
+    COMBOBOX        IDC_COMBO_FUNCTION,21,209,83,12,CBS_DROPDOWNLIST | 
+                    WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Channel",IDC_STATIC_CHANNEL,123,199,38,9
+    COMBOBOX        IDC_COMBO_CHANNEL,123,209,56,16,CBS_DROPDOWNLIST | 
+                    CBS_SORT | WS_TABSTOP
+    LTEXT           "Value",IDC_STATIC_VALUE,199,199,22,8
+    SCROLLBAR       IDC_SCROLLBAR_TEST_VALUE,233,208,9,15,SBS_VERT
+    EDITTEXT        IDC_EDIT_VALUE,199,209,33,14,ES_AUTOHSCROLL | ES_NUMBER
+    PUSHBUTTON      "&Send",IDC_BUTTON_SEND,265,199,45,15
+    PUSHBUTTON      "&Exit",IDC_BUTTON_EXIT,265,217,45,15
+    GROUPBOX        "Control",IDC_STATIC,4,42,325,138
+    LTEXT           "Channel 1",IDC_STATIC_CHANNEL1,54,54,40,11
+    LTEXT           "255",IDC_STATIC_VALUE1,239,69,13,10
+    LTEXT           "0",IDC_STATIC,63,69,14,13
+    CONTROL         "Slider2",IDC_SLIDER_CHANNEL1,"msctls_trackbar32",
+                    TBS_TOP | TBS_NOTICKS | WS_TABSTOP,56,82,199,21
+    EDITTEXT        IDC_EDIT_CHANNEL1,257,81,30,16,ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    SCROLLBAR       IDC_SCROLLBAR_CHANNEL1,288,80,12,17,SBS_VERT
+    GROUPBOX        "State",IDC_STATIC_STATE,4,5,325,34
+    GROUPBOX        "Test",IDC_STATIC,4,190,325,48
+    PUSHBUTTON      "&Refresh",IDC_BUTTON_REFRESH,260,16,53,15
+    LTEXT           "COM State",IDC_STATIC_COMSTATE,110,18,39,9
+    EDITTEXT        IDC_EDIT_COMSTATE,151,16,88,14,ES_AUTOHSCROLL | 
+                    ES_READONLY
+    CONTROL         "ON",IDC_RADIO_C1_ON,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP,31,78,25,8
+    CONTROL         "OFF",IDC_RADIO_C1_OFF,"Button",BS_AUTORADIOBUTTON,31,93,
+                    25,8
+    LISTBOX         IDC_LIST1,73,101,33,14,LBS_NOINTEGRALHEIGHT | NOT 
+                    WS_VISIBLE | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
+    PUSHBUTTON      "GetLength",IDC_BUTTON1,107,98,41,17,NOT WS_VISIBLE
+    PUSHBUTTON      "Read",IDC_BUTTON2,180,101,30,17,NOT WS_VISIBLE
+    PUSHBUTTON      "Clear",IDC_BUTTON3,145,100,35,14,NOT WS_VISIBLE
+    PUSHBUTTON      "ClearBuffer",IDC_BUTTON4,207,102,51,13,NOT WS_VISIBLE
+    LTEXT           "Channel 2",IDC_STATIC_CHANNEL2,54,115,40,11
+    CONTROL         "Slider2",IDC_SLIDER_CHANNEL2,"msctls_trackbar32",
+                    TBS_TOP | TBS_NOTICKS | WS_TABSTOP,56,141,199,21
+    EDITTEXT        IDC_EDIT_CHANNEL2,257,143,30,16,ES_AUTOHSCROLL | 
+                    ES_NUMBER
+    SCROLLBAR       IDC_SCROLLBAR_CHANNEL2,288,141,12,17,SBS_VERT
+    CONTROL         "ON",IDC_RADIO_C2_ON,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP,31,139,25,8
+    CONTROL         "OFF",IDC_RADIO_C2_OFF,"Button",BS_AUTORADIOBUTTON,31,
+                    155,25,8
+    LTEXT           "0",IDC_STATIC,63,127,14,13
+    LTEXT           "255",IDC_STATIC_VALUE3,239,128,13,10
+END
+
+
+#ifndef _MAC
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080404b0"
+        BEGIN
+            VALUE "Comments", "\0"
+            VALUE "CompanyName", "\0"
+            VALUE "FileDescription", "DPS V1.2\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "DP\0"
+            VALUE "LegalCopyright", "CopyRight  (C) 2010\0"
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "DPS.EXE\0"
+            VALUE "PrivateBuild", "\0"
+            VALUE "ProductName", "DPS\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
+            VALUE "SpecialBuild", "\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 1200
+    END
+END
+
+#endif    // !_MAC
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO DISCARDABLE 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 208
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 80
+    END
+
+    IDD_DP_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 4
+        RIGHTMARGIN, 329
+        TOPMARGIN, 5
+        BOTTOMMARGIN, 238
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_DP_DIALOG DLGINIT
+BEGIN
+    IDC_COMBO_FUNCTION, 0x403, 8, 0
+0x7574, 0x6e72, 0x4f20, 0x004e, 
+    IDC_COMBO_FUNCTION, 0x403, 9, 0
+0x7574, 0x6e72, 0x4f20, 0x4646, "\000" 
+    IDC_COMBO_FUNCTION, 0x403, 16, 0
+0x6e69, 0x6574, 0x736e, 0x7469, 0x2079, 0x7277, 0x7469, 0x0065, 
+    IDC_COMBO_FUNCTION, 0x403, 15, 0
+0x6e69, 0x6574, 0x736e, 0x7469, 0x2079, 0x6572, 0x6461, "\000" 
+    IDC_COMBO_FUNCTION, 0x403, 1, 0
+"\000" 
+    IDC_COMBO_CHANNEL, 0x403, 2, 0
+0x0031, 
+    IDC_COMBO_CHANNEL, 0x403, 2, 0
+0x0032, 
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE DISCARDABLE 
+BEGIN
+    IDS_ABOUTBOX            "About DPS(&A)..."
+END
+
+#endif    // Chinese (中国) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
+LANGUAGE 4, 2
+#pragma code_page(936)
+#endif //_WIN32
+#include "res\DP.rc2"  // non-Microsoft Visual C++ edited resources
+#include "l.chs\afxres.rc"          // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
