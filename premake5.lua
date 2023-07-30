@@ -6,8 +6,8 @@ project "HDPS_2C"
     targetdir ("bin/" .. outputdir .. "/%{prj.name}")
     objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
     
-    pchheader "stdafx.h"
-    pchsource "%{wks.location}/NMROSCore/vendor/Camera/HDPS/stdafx.cpp"
+    pchheader "StdAfx.h"
+    pchsource "%{wks.location}/NMROSCore/vendor/Camera/HDPS/StdAfx.cpp"
     
     characterset ("ASCII")
     
@@ -26,11 +26,6 @@ project "HDPS_2C"
         "**.h",
         "**.cpp",
         "**.rc",
-    }
-    links
-    {
-      "Setupapi.lib",
-      "LIBCMT.LIB"
     }
     
     filter "system:windows"
