@@ -1,13 +1,13 @@
 project "HDPS_2C"
     kind "WindowedApp"
     language "C++"
-    cppdialect "C++17"
+    cppdialect "C++11"
 
-    targetdir ("../bin/" .. outputdir .. "/%{prj.name}")
-    objdir ("../bin-int/" .. outputdir .. "/%{prj.name}")
+    targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+    objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
     
     pchheader "stdafx.h"
-    pchsource "%{wks.location}/NMROSCore/vendor/Camera/HDPS_2C/stdafx.cpp"
+    pchsource "%{wks.location}/NMROSCore/vendor/Camera/HDPS/stdafx.cpp"
     
     characterset ("ASCII")
     
@@ -16,40 +16,32 @@ project "HDPS_2C"
       "_AFXDLL"
     }
 
+    flags
+    {
+      "MFC"
+    }
+
     files
     {
         "**.h",
         "**.cpp",
         "**.rc",
     }
-
-    includedirs
-    {
-        "%{IncludeDir.Camera_PIXELINK}",
-    }
-
-    libdirs
-    {
-        "%{wks.location}/NMROSCore/vendor/Camera/libs/PIXELINK/lib/x64",
-    }
-      
     links
     {
-        "PxLAPI40.lib",
-        "NMROSCore"
+      "Setupapi.lib",
+      "LIBCMT.LIB"
     }
     
     filter "system:windows"
         systemversion "latest"
         
     filter "configurations:Debug"
-        defines "NMROS_DEBUG"
         runtime "Debug"
         symbols "on"
         staticruntime "off"
 
     filter "configurations:Release"
-        defines "NMROS_RELEASE"
         runtime "Release"
         optimize "on"
         staticruntime "on"

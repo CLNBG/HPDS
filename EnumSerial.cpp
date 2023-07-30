@@ -1,4 +1,4 @@
-/************************************************************************* 
+/*************************************************************************
 * Serial port enumeration routines
 *
 * The EnumSerialPort function will populate an array of SSerInfo structs,
@@ -45,7 +45,7 @@
 // needed for serial port enumeration.
 #ifndef GUID_CLASS_COMPORT
 DEFINE_GUID(GUID_CLASS_COMPORT, 0x86e0d1e0L, 0x8089, 0x11d0, 0x9c, 0xe4, \
-			0x08, 0x00, 0x3e, 0x30, 0x1f, 0x73);
+	0x08, 0x00, 0x3e, 0x30, 0x1f, 0x73);
 #endif
 
 //---------------------------------------------------------------
@@ -53,11 +53,11 @@ DEFINE_GUID(GUID_CLASS_COMPORT, 0x86e0d1e0L, 0x8089, 0x11d0, 0x9c, 0xe4, \
 // These throw a CString on failure, describing the nature of
 // the error that occurred.
 
-void EnumPortsWdm(CArray<SSerInfo,SSerInfo&> &asi);
-void EnumPortsWNt4(CArray<SSerInfo,SSerInfo&> &asi);
-void EnumPortsW9x(CArray<SSerInfo,SSerInfo&> &asi);
+void EnumPortsWdm(CArray<SSerInfo, SSerInfo&>& asi);
+void EnumPortsWNt4(CArray<SSerInfo, SSerInfo&>& asi);
+void EnumPortsW9x(CArray<SSerInfo, SSerInfo&>& asi);
 void SearchPnpKeyW9x(HKEY hkPnp, BOOL bUsbDevice,
-					 CArray<SSerInfo,SSerInfo&> &asi);
+	CArray<SSerInfo, SSerInfo&>& asi);
 
 
 //---------------------------------------------------------------
@@ -66,7 +66,7 @@ void SearchPnpKeyW9x(HKEY hkPnp, BOOL bUsbDevice,
 // occurred. If bIgnoreBusyPorts is TRUE, ports that can't
 // be opened for read/write access are not included.
 
-void EnumSerialPorts(CArray<SSerInfo,SSerInfo&> &asi, BOOL bIgnoreBusyPorts)
+void EnumSerialPorts(CArray<SSerInfo, SSerInfo&>& asi, BOOL bIgnoreBusyPorts)
 {
 	// Clear the output array
 	asi.RemoveAll();
@@ -77,7 +77,7 @@ void EnumSerialPorts(CArray<SSerInfo,SSerInfo&> &asi, BOOL bIgnoreBusyPorts)
 	vi.dwOSVersionInfoSize = sizeof(vi);
 	if (!::GetVersionEx(&vi)) {
 		CString str;
-		str.Format("Could not get OS version. (err=%lx)",
+		str.Format(_T("Could not get OS version. (err=%lx)"),
 			GetLastError());
 		throw str;
 	}
@@ -94,9 +94,9 @@ void EnumSerialPorts(CArray<SSerInfo,SSerInfo&> &asi, BOOL bIgnoreBusyPorts)
 		EnumPortsWdm(asi);
 	}
 
-	for (int ii=0; ii<asi.GetSize(); ii++)
+	for (int ii = 0; ii < asi.GetSize(); ii++)
 	{
-		SSerInfo& rsi = asi[ii];    
+		SSerInfo& rsi = asi[ii];
 		if (bIgnoreBusyPorts) {
 			// Only display ports that can be opened for read/write
 			HANDLE hCom = CreateFile(rsi.strDevPath,
@@ -106,11 +106,11 @@ void EnumSerialPorts(CArray<SSerInfo,SSerInfo&> &asi, BOOL bIgnoreBusyPorts)
 				OPEN_EXISTING, /* comm devices must use OPEN_EXISTING */
 				0,    /* not overlapped I/O */
 				NULL  /* hTemplate must be NULL for comm devices */
-				);
+			);
 			if (hCom == INVALID_HANDLE_VALUE) {
 				// It can't be opened; remove it.
 				asi.RemoveAt(ii);
-				ii--;               
+				ii--;
 				continue;
 			}
 			else {
@@ -130,10 +130,10 @@ void EnumSerialPorts(CArray<SSerInfo,SSerInfo&> &asi, BOOL bIgnoreBusyPorts)
 			// If the port name is of the form "ACME Port (COM3)"
 			// then strip off the " (COM3)"
 			rsi.strPortDesc = rsi.strFriendlyName;
-			int startdex = rsi.strPortDesc.Find(" (");
-			int enddex = rsi.strPortDesc.Find(")");
-			if (startdex > 0 && enddex == 
-				(rsi.strPortDesc.GetLength()-1))
+			int startdex = rsi.strPortDesc.Find(_T(" ("));
+			int enddex = rsi.strPortDesc.Find(_T(")"));
+			if (startdex > 0 && enddex ==
+				(rsi.strPortDesc.GetLength() - 1))
 				rsi.strPortDesc = rsi.strPortDesc.Left(startdex);
 		}
 	}
@@ -141,26 +141,26 @@ void EnumSerialPorts(CArray<SSerInfo,SSerInfo&> &asi, BOOL bIgnoreBusyPorts)
 
 // Helpers for EnumSerialPorts
 
-void EnumPortsWdm(CArray<SSerInfo,SSerInfo&> &asi)
+void EnumPortsWdm(CArray<SSerInfo, SSerInfo&>& asi)
 {
 	CString strErr;
 	// Create a device information set that will be the container for 
 	// the device interfaces.
-	GUID *guidDev = (GUID*) &GUID_CLASS_COMPORT;
+	GUID* guidDev = (GUID*)&GUID_CLASS_COMPORT;
 
 	HDEVINFO hDevInfo = INVALID_HANDLE_VALUE;
-	SP_DEVICE_INTERFACE_DETAIL_DATA *pDetData = NULL;
+	SP_DEVICE_INTERFACE_DETAIL_DATA* pDetData = NULL;
 
 	try {
-		hDevInfo = SetupDiGetClassDevs( guidDev,
+		hDevInfo = SetupDiGetClassDevs(guidDev,
 			NULL,
 			NULL,
 			DIGCF_PRESENT | DIGCF_DEVICEINTERFACE
-			);
+		);
 
-		if(hDevInfo == INVALID_HANDLE_VALUE) 
+		if (hDevInfo == INVALID_HANDLE_VALUE)
 		{
-			strErr.Format("SetupDiGetClassDevs failed. (err=%lx)",
+			strErr.Format(_T("SetupDiGetClassDevs failed. (err=%lx)"),
 				GetLastError());
 			throw strErr;
 		}
@@ -174,12 +174,12 @@ void EnumPortsWdm(CArray<SSerInfo,SSerInfo&> &asi)
 		// it's weird.
 		ifcData.cbSize = sizeof(SP_DEVICE_INTERFACE_DATA);
 		pDetData->cbSize = sizeof(SP_DEVICE_INTERFACE_DETAIL_DATA);
-		for (DWORD ii=0; bOk; ii++) {
+		for (DWORD ii = 0; bOk; ii++) {
 			bOk = SetupDiEnumDeviceInterfaces(hDevInfo,
 				NULL, guidDev, ii, &ifcData);
 			if (bOk) {
 				// Got a device. Get the details.
-				SP_DEVINFO_DATA devdata = {sizeof(SP_DEVINFO_DATA)};
+				SP_DEVINFO_DATA devdata = { sizeof(SP_DEVINFO_DATA) };
 				bOk = SetupDiGetDeviceInterfaceDetail(hDevInfo,
 					&ifcData, pDetData, dwDetDataSize, NULL, &devdata);
 				if (bOk) {
@@ -205,7 +205,7 @@ void EnumPortsWdm(CArray<SSerInfo,SSerInfo&> &asi)
 						// BUS GUID. Currently, Windows doesn't let you query
 						// that though (SPDRP_BUSTYPEGUID seems to exist in
 						// documentation only).
-						bUsbDevice = (strncmp(locinfo, "USB", 3)==0);
+						bUsbDevice = (strncmp(locinfo, "USB", 3) == 0);
 					}
 					if (bSuccess) {
 						// Add an entry to the array
@@ -219,7 +219,7 @@ void EnumPortsWdm(CArray<SSerInfo,SSerInfo&> &asi)
 
 				}
 				else {
-					strErr.Format("SetupDiGetDeviceInterfaceDetail failed. (err=%lx)",
+					strErr.Format(_T("SetupDiGetDeviceInterfaceDetail failed. (err=%lx)"),
 						GetLastError());
 					throw strErr;
 				}
@@ -227,7 +227,7 @@ void EnumPortsWdm(CArray<SSerInfo,SSerInfo&> &asi)
 			else {
 				DWORD err = GetLastError();
 				if (err != ERROR_NO_MORE_ITEMS) {
-					strErr.Format("SetupDiEnumDeviceInterfaces failed. (err=%lx)", err);
+					strErr.Format(_T("SetupDiEnumDeviceInterfaces failed. (err=%lx)"), err);
 					throw strErr;
 				}
 			}
@@ -238,7 +238,7 @@ void EnumPortsWdm(CArray<SSerInfo,SSerInfo&> &asi)
 	}
 
 	if (pDetData != NULL)
-		delete [] (char*)pDetData;
+		delete[](char*)pDetData;
 	if (hDevInfo != INVALID_HANDLE_VALUE)
 		SetupDiDestroyDeviceInfoList(hDevInfo);
 
@@ -246,22 +246,22 @@ void EnumPortsWdm(CArray<SSerInfo,SSerInfo&> &asi)
 		throw strErr;
 }
 
-void EnumPortsWNt4(CArray<SSerInfo,SSerInfo&> &asi)
+void EnumPortsWNt4(CArray<SSerInfo, SSerInfo&>& asi)
 {
 	// NT4's driver model is totally different, and not that
 	// many people use NT4 anymore. Just try all the COM ports
 	// between 1 and 16
 	SSerInfo si;
-	for (int ii=1; ii<=16; ii++) {
+	for (int ii = 1; ii <= 16; ii++) {
 		CString strPort;
-		strPort.Format("COM%d",ii);
-		si.strDevPath = CString("\\\\.\\") + strPort;
+		strPort.Format(_T("COM%d"), ii);
+		si.strDevPath = CString(_T("\\\\.\\")) + strPort;
 		si.strPortName = strPort;
 		asi.Add(si);
 	}
 }
 
-void EnumPortsW9x(CArray<SSerInfo,SSerInfo&> &asi)
+void EnumPortsW9x(CArray<SSerInfo, SSerInfo&>& asi)
 {
 	// Look at all keys in HKLM\Enum, searching for subkeys named
 	// *PNP0500 and *PNP0501. Within these subkeys, search for
@@ -274,9 +274,9 @@ void EnumPortsW9x(CArray<SSerInfo,SSerInfo&> &asi)
 	HKEY hkSubSubEnum = NULL;
 
 	try {
-		if (RegOpenKeyEx(HKEY_LOCAL_MACHINE, "Enum", 0, KEY_READ,
+		if (RegOpenKeyEx(HKEY_LOCAL_MACHINE, _T("Enum"), 0, KEY_READ,
 			&hkEnum) != ERROR_SUCCESS)
-			throw CString("Could not read from HKLM\\Enum");
+			throw CString(_T("Could not read from HKLM\\Enum"));
 
 		// Enumerate the subkeys of HKLM\Enum
 		char acSubEnum[128];
@@ -288,25 +288,25 @@ void EnumPortsW9x(CArray<SSerInfo,SSerInfo&> &asi)
 			HKEY hkSubEnum = NULL;
 			if (RegOpenKeyEx(hkEnum, acSubEnum, 0, KEY_READ,
 				&hkSubEnum) != ERROR_SUCCESS)
-				throw CString("Could not read from HKLM\\Enum\\")+acSubEnum;
+				throw CString(_T("Could not read from HKLM\\Enum\\")) + acSubEnum;
 
 			// Enumerate the subkeys of HKLM\Enum\*\, looking for keys
 			// named *PNP0500 and *PNP0501 (or anything in USBPORTS)
-			BOOL bUsbDevice = (strcmp(acSubEnum,"USBPORTS")==0);
+			BOOL bUsbDevice = (strcmp(acSubEnum, "USBPORTS") == 0);
 			char acSubSubEnum[128];
 			dwSize = sizeof(acSubSubEnum);  // set the buffer size
 			DWORD dwSubSubEnumIndex = 0;
 			while (RegEnumKeyEx(hkSubEnum, dwSubSubEnumIndex++, acSubSubEnum,
 				&dwSize, NULL, NULL, NULL, NULL) == ERROR_SUCCESS)
 			{
-				BOOL bMatch = (strcmp(acSubSubEnum,"*PNP0500")==0 ||
-					strcmp(acSubSubEnum,"*PNP0501")==0 ||
+				BOOL bMatch = (strcmp(acSubSubEnum, "*PNP0500") == 0 ||
+					strcmp(acSubSubEnum, "*PNP0501") == 0 ||
 					bUsbDevice);
 				if (bMatch) {
 					HKEY hkSubSubEnum = NULL;
 					if (RegOpenKeyEx(hkSubEnum, acSubSubEnum, 0, KEY_READ,
 						&hkSubSubEnum) != ERROR_SUCCESS)
-						throw CString("Could not read from HKLM\\Enum\\") + 
+						throw CString(_T("Could not read from HKLM\\Enum\\")) +
 						acSubEnum + "\\" + acSubSubEnum;
 					SearchPnpKeyW9x(hkSubSubEnum, bUsbDevice, asi);
 					RegCloseKey(hkSubSubEnum);
@@ -335,7 +335,7 @@ void EnumPortsW9x(CArray<SSerInfo,SSerInfo&> &asi)
 }
 
 void SearchPnpKeyW9x(HKEY hkPnp, BOOL bUsbDevice,
-					 CArray<SSerInfo,SSerInfo&> &asi)
+	CArray<SSerInfo, SSerInfo&>& asi)
 {
 	// Enumerate the subkeys of the given PNP key, looking for values with
 	// the name "PORTNAME"
@@ -353,13 +353,13 @@ void SearchPnpKeyW9x(HKEY hkPnp, BOOL bUsbDevice,
 			HKEY hkSubPnp = NULL;
 			if (RegOpenKeyEx(hkPnp, acSubPnp, 0, KEY_READ,
 				&hkSubPnp) != ERROR_SUCCESS)
-				throw CString("Could not read from HKLM\\Enum\\...\\")
+				throw CString(_T("Could not read from HKLM\\Enum\\...\\"))
 				+ acSubPnp;
 
 			// Look for the PORTNAME value
 			char acValue[128];
 			dwSize = sizeof(acValue);
-			if (RegQueryValueEx(hkSubPnp, "PORTNAME", NULL, NULL, (BYTE*)acValue,
+			if (RegQueryValueEx(hkSubPnp, _T("PORTNAME"), NULL, NULL, (BYTE*)acValue,
 				&dwSize) == ERROR_SUCCESS)
 			{
 				CString strPortName(acValue);
@@ -367,20 +367,20 @@ void SearchPnpKeyW9x(HKEY hkPnp, BOOL bUsbDevice,
 				// Got the portname value. Look for a friendly name.
 				CString strFriendlyName;
 				dwSize = sizeof(acValue);
-				if (RegQueryValueEx(hkSubPnp, "FRIENDLYNAME", NULL, NULL, (BYTE*)acValue,
+				if (RegQueryValueEx(hkSubPnp, _T("FRIENDLYNAME"), NULL, NULL, (BYTE*)acValue,
 					&dwSize) == ERROR_SUCCESS)
 					strFriendlyName = acValue;
 
 				// Prepare an entry for the output array.
 				SSerInfo si;
-				si.strDevPath = CString("\\\\.\\") + strPortName;
+				si.strDevPath = CString(_T("\\\\.\\")) + strPortName;
 				si.strPortName = strPortName;
 				si.strFriendlyName = strFriendlyName;
 				si.bUsbDevice = bUsbDevice;
 
 				// Overwrite duplicates.
 				BOOL bDup = FALSE;
-				for (int ii=0; ii<asi.GetSize() && !bDup; ii++)
+				for (int ii = 0; ii < asi.GetSize() && !bDup; ii++)
 				{
 					if (asi[ii].strPortName == strPortName) {
 						bDup = TRUE;
